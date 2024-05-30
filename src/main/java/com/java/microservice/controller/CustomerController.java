@@ -4,11 +4,15 @@ import com.java.microservice.exception.ErrorResponse;
 import com.java.microservice.model.AccountType;
 import com.java.microservice.model.Customer;
 import com.java.microservice.model.CustomerRequest;
+import com.java.microservice.model.CustomerResponse;
+import com.java.microservice.model.Response;
 import com.java.microservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * Controller class for managing customer-related endpoints.
@@ -90,46 +94,22 @@ public class CustomerController {
 				HttpStatus.CREATED);
 	}
 
-	// Inner class for Response data
-	static class Response {
-
-		private int transactionStatusCode;
-		private String transactionStatusDescription;
-		private Long customerNumber;
-
-		public Response(int transactionStatusCode, String transactionStatusDescription) {
-			this.transactionStatusCode = transactionStatusCode;
-			this.transactionStatusDescription = transactionStatusDescription;
-		}
-
-		public Response(Long customerNumber, int transactionStatusCode, String transactionStatusDescription) {
-			this.transactionStatusCode = transactionStatusCode;
-			this.transactionStatusDescription = transactionStatusDescription;
-			this.customerNumber = customerNumber;
-		}
-
-		public int getTransactionStatusCode() {
-			return transactionStatusCode;
-		}
-
-		public void setTransactionStatusCode(int transactionStatusCode) {
-			this.transactionStatusCode = transactionStatusCode;
-		}
-
-		public String getTransactionStatusDescription() {
-			return transactionStatusDescription;
-		}
-
-		public void setTransactionStatusDescription(String transactionStatusDescription) {
-			this.transactionStatusDescription = transactionStatusDescription;
-		}
-
-		public Long getCustomerNumber() {
-			return customerNumber;
-		}
-
-		public void setCustomerNumber(Long customerNumber) {
-			this.customerNumber = customerNumber;
+	/**
+	 * Retrieves a customer by their customer number.
+	 *
+	 * @param customerNumber The customer number to look up.
+	 * @return ResponseEntity with the customer information if found, or an error
+	 *         response if not found.
+	 */
+	@GetMapping("/{customerNumber}")
+	public ResponseEntity<?> getCustomerByCustomerNumber(@PathVariable Long customerNumber) {
+		Optional<Customer> customerOpt = customerService.getCustomerByCustomerNumber(customerNumber);
+		if (customerOpt.isPresent()) {
+			Customer customer = customerOpt.get();
+			return new ResponseEntity<>(new CustomerResponse(customer, 302, "Customer Account found"),
+					HttpStatus.FOUND);
+		} else {
+			return new ResponseEntity<>(new ErrorResponse(401, "Customer not found"), HttpStatus.NOT_FOUND);
 		}
 	}
 
