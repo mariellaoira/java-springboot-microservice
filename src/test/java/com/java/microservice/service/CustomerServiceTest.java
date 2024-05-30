@@ -1,5 +1,6 @@
 package com.java.microservice.service;
 
+import com.java.microservice.model.AccountType;
 import com.java.microservice.model.Customer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class CustomerServiceTest {
 		customer.setCustomerMobile("09081234567");
 		customer.setAddress1("Makati City");
 		customer.setAddress2("Metro Manila");
-		customer.setAccountType("C");
+		customer.setAccountType(AccountType.fromUserInput("C"));
 
 		// Call the service method to create the customer
 		Customer createdCustomer = customerService.createCustomer(customer);

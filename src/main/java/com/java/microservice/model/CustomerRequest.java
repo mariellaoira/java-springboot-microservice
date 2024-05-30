@@ -1,42 +1,12 @@
 package com.java.microservice.model;
 
-import javax.persistence.*;
-
-@Entity
-public class Customer {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	private Long customerNumber;
-
-	@Column(name = "customer_name")
+public class CustomerRequest {
 	private String customerName;
-
-	@Column(name = "customer_mobile")
 	private String customerMobile;
-
-	@Column(name = "customer_email")
 	private String customerEmail;
-
-	@Column(name = "address1")
 	private String address1;
-
-	@Column(name = "address2")
 	private String address2;
-
-	@Enumerated(EnumType.STRING)
-    @Column(name = "account_type")
-    private AccountType accountType;
-
-	// Getters and setters
-
-	public Long getCustomerNumber() {
-		return customerNumber;
-	}
-
-	public void setCustomerNumber(Long customerNumber) {
-		this.customerNumber = customerNumber;
-	}
+	private String accountType;
 
 	public String getCustomerName() {
 		return customerName;
@@ -78,11 +48,11 @@ public class Customer {
 		this.address2 = address2;
 	}
 
-	public AccountType getAccountType() {
+	public String getAccountType() {
 		return accountType;
 	}
 
-	public void setAccountType(AccountType accountType) {
+	public void setAccountType(String accountType) {
 		this.accountType = accountType;
 	}
 }

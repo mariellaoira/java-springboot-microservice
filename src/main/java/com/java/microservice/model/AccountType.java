@@ -1,15 +1,26 @@
 package com.java.microservice.model;
 
 public enum AccountType {
-	S("Savings"), C("Checking");
+	SAVINGS("savings"), CHECKING("checking"), S("S"), C("C");
 
-	private String value;
+	private final String value;
 
-	private AccountType(String value) {
+	AccountType(String value) {
 		this.value = value;
 	}
 
-	public String value() {
+	public String getValue() {
 		return value;
+	}
+
+	public static AccountType fromUserInput(String input) {
+		switch (input.toUpperCase()) {
+		case "S":
+			return SAVINGS;
+		case "C":
+			return CHECKING;
+		default:
+			throw new IllegalArgumentException("Invalid account type. Allowed values are 'S' and 'C'.");
+		}
 	}
 }

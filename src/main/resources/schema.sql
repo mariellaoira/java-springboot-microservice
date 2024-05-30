@@ -5,5 +5,5 @@ CREATE TABLE IF NOT EXISTS customer (
     customer_email VARCHAR(50) NOT NULL,
     address1 VARCHAR(100) NOT NULL,
     address2 VARCHAR(100),
-    account_type VARCHAR(1) NOT NULL
+    account_type VARCHAR(50) NOT NULL
 );
